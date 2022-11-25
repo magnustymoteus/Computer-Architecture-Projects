@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-15">
+<title>Project 1: Gates and Wires (Patryk Pilichowski & Alik Tikranian)</title>
+<script>
+    MathJax = {
+      loader: {load: ['input/asciimath', 'output/chtml']}
+    }
+    </script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+</script>
+<!-- Het "u" element (underline) is geherdefinieerd voor overline -->
+<style type="text/css">body { 
+	font-family: Cambria,Georgia,serif; 
+}
+#verslag {
+  text-align: left;
+  max-width: 1000px;
+  background-color:rgba(0,0,0,0.1);
+  padding: 1px 5px 1px 5px;
+}
+.inline-table {
+  display: inline-table;
+  margin: 0 10px 0 0;
+}
+table, td {
+  border: 1px solid black;
+}
+td {
+  padding: 5px;
+}
+img {
+  border: 1px solid gray;
+}
+ul p, small, table {
+  font-weight: 100;
+  font-size: 16px;
+}
+u {text-decoration: underline;}</style>
+
+</head>
+
+<body>
+
+<h1>Verslag</h1>
+<p><b>Titel:</b> <i>Project 1: Gates and Wires</i></p>
+<p>Dit verslag werd opgesteld door:<br>
+</p><ul>
+<li><b>Naam:</b> <i>Patryk Pilichowski</i><br>
+<b>Studentennummer:</b> <i>20220383</i><br>
+<b>Email adres:</b> <i>Patryk.Pilichowski@student.uantwerpen.be</i>
+</li>
+<li><b>Naam:</b> <i>Alik Tikranian</i><br>
+<b>Studentennummer:</b> <i>20204982</i><br>
+<b>Email adres:</b> <i>Alik.Tikranian@student.uantwerpen.be</i>
+</li>
+</ul>
+<b>Aantal man-uren besteed:</b> <i>`~`5 uur</i><br>
+<b>Moeilijkheidsgraad:</b> <i></i>1.5/10<p></p>
+
+<h2>Inhoud van de oplossing</h2>
+<p>De oplossing bestaat uit de volgende bestanden (geef alle bestanden op):</p>
+<ul>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1665949105/CA_project_1/nand_gates.circ">nand_gates.circ</a>: Solution for <a href="#problem-1">problem 1</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1665949105/CA_project_1/truthtable_to_circuit.circ">truthtable_to_circuit.circ</a>: Solution for <a href="#problem-2">problem 2</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1665949105/CA_project_1/7segment_display.circ">7segment_display.circ</a>: Solution for <a href="#problem-3">problem 3</a></li>
+</ul>
+
+<div id="verslag">
+<h2>Verslag</h2>
+<h3 id="problem-1">1.</h3>
+<h3>(a) Use Logisim to build a NAND gate as a new component using only basic gates (AND,
+  OR, NOT).</h3>
+ <p>Before we can implement a NAND gate, we first need to look at what an AND gate actually does. AND outputs true only when all of its inputs are also true. NAND on the other hand, is an abbreviation for NOT AND, a negation/complement of AND. For the same inputs, NAND is false when AND is true and vice versa.</p>
+ <p>For comparison, let's look at the truth table of AND as well as NAND:</p>
+ <div class="inline-table">
+ <table>
+   AND:
+   <tr>
+     <td>`A_"(input)"`</td>
+     <td>`B_"(input)"`</td>
+     <td>`X_"(output)"`</td>
+   </tr>
+   <tr>
+     <td>0</td>
+     <td>0</td>
+     <td>0</td>
+   </tr>
+   <tr>
+     <td>0</td>
+     <td>1</td>
+     <td>0</td>
+   </tr>
+   <tr>
+     <td>1</td>
+     <td>0</td>
+     <td>0</td>
+   </tr>
+   <tr>
+     <td>1</td>
+     <td>1</td>
+     <td>1</td>
+   </tr>
+ </table>
+ </div>
+ <div class="inline-table">
+ <table>
+   NAND (NOT AND):
+   <tr>
+     <td>`A_"(input)"`</td>
+     <td>`B_"(input)"`</td>
+     <td>`X_"(output)"`</td>
+   </tr>
+   <tr>
+     <td>0</td>
+     <td>0</td>
+     <td>1</td>
+   </tr>
+   <tr>
+     <td>0</td>
+     <td>1</td>
+     <td>1</td>
+   </tr>
+   <tr>
+     <td>1</td>
+     <td>0</td>
+     <td>1</td>
+   </tr>
+   <tr>
+     <td>1</td>
+     <td>1</td>
+     <td>0</td>
+   </tr>
+ </table>
+ </div>
+<p>A boolean expression of AND looks like this:</p> `"X"_"(AND)" = A\cdotB`
+<p>Now we negate the entire AND expression and become NAND:</p> `"X"_"(NAND)" = \overline{A\cdotB}`
+<p>With respect to DeMorgan's law, we can write out the negation even further:</p>`\overline{A\cdotB}\=\overline{A}+\overline{B}`
+<p>With all of this information we can now build a NAND gate using only basic gates (AND, OR, NOT).
+  We generally have 2 ways to do this:</p>
+  <ul>
+  <li
+  ><h4>Method 1: Inverted AND-Output:</h4>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665693807/CA_project_1/01.png"/>
+  <p>This is the straightforward method, we simply negate the AND gate output with a NOT gate. The most fitting boolean expression here appears to be `\overline{A\cdotB}` (even though both are equal)</p>
+  <p>Let's analyze how many components we've used:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665693807/CA_project_1/02.png">
+  <p>Total components used is 5.</p></li>
+
+  <li><h4>Method 2: Inverted OR-Inputs:</h4>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665693807/CA_project_1/03.png"/>
+    <p>The inputs for the OR gate are negated. Here, the expression `\overline{A}+\overline{B}` fits the most. We could also use separate NOT gates for the inputs instead of negating them in the OR-gate.</p>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665693807/CA_project_1/04.png">
+    <p>Total components used is 4.</p></li>
+</ul>
+<h3>(b) Like the set of AND, OR, NOT gates, the singleton NAND gate set is functionally
+  complete. This means that any algebraic expression or truth table can be implemented by
+  using only NAND gates. Show that NAND is functionally complete by building an AND,
+  OR and NOT gate using only your own NAND component in Logisim.</h3>
+  <p>Let us use method 2 of NAND implementation and store it in Logisim as a separate component named "<i>NAND Gate</i>". Let's start by implementing an AND gate first. </p>
+  <ul>
+  <li>
+  <h4>AND Gate:</h4>
+  `\overline{\overline{A}+\overline{B}}+\overline{\overline{A}+\overline{B}}`
+  <p>This expression can then be simplified into this:</p>
+  <p>`\overline{\overline{A}+\overline{B}}+\overline{\overline{A}+\overline{B}}`<br>`= A\cdotB+A\cdotB`<br>`= A\cdotB`</p>
+  <p>Let's convert this expression into a circuit:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665693807/CA_project_1/05.png"/>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665693807/CA_project_1/06.png"/>
+  <small><br>The second image is provided for more understanding.</small>
+  <p>This works exactly like an AND gate.</p> 
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665693807/CA_project_1/07.png"/>
+  <p>Total components used is 5.</p>
+</li>
+<li>
+    <h4>OR Gate:</h4>
+    `\overline{\overline{A}}+\overline{\overline{B}} = A+B`
+    <p>This expression can also be implemented with only NAND gates:</p>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665858021/CA_project_1/08.png"/>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665858021/CA_project_1/09.png"/>
+    <br><img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665858021/CA_project_1/10.png"/>
+    <p>Total components used is 6.</p></li>
+  <li>
+    <h4>NOT Gate:</h4>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665858021/CA_project_1/11.png"/>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665858021/CA_project_1/12.png"/>
+    <p>With a single negated input, this just becomes a NOT gate at this point.</p>
+  </li>
+</ul>
+<h3 id="problem-2">2.</h3>
+<h3>Implement the following truth table in Logisim using AND, OR and NOT gates. To do
+  this, first write the truth table as a Boolean algebraic expression. Use as few gates as
+  possible. A, B and C are inputs, and X and Y are outputs.</h3>
+  Truth Table:
+  <table>
+    <tr>
+      <td>`A_"(input)"`</td>
+      <td>`B_"(input)"`</td>
+      <td>`C_"(input)"`</td>
+      <td>`X_"(output)"`</td>
+      <td>`Y_"(output)"`</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </table>
+  <ul>
+  <p>There are two ways to do this: the manual method and the K-map method. Let's go through the K-map method:</p>
+  <li>`X=`
+  <figure>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665868563/CA_project_1/14.png">
+    <figcaption><small>Generated from <a href="https://www.boolean-algebra.com/">boolean-algebra.com.</a></small></figcaption>
+  </figure>
+  <p>By looking at the selected areas of the K-map and the inputs that don't change across it, we can determine that the following expression is the boolean condition for `X`:</p>
+  `X=\overline{A}\cdot\overline{B}+\overline{B}\cdot\overline{C}`
+  <p>With the manual way we would've had to simplify it out:</p>
+  <p>`X=\overline{A}\overline{B}\overline{C}+\overline{A}\overline{B}C+A\overline{B}\overline{C}`</p>
+  <p>`...`</p>
+  <p>`=\overline{A}\cdot\overline{B}+\overline{B}\cdot\overline{C}`</p>
+  </li><li>
+  <p>`Y=`</p>
+  <figure>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665868563/CA_project_1/15.png">
+    <figcaption><small>Generated from <a href="https://www.boolean-algebra.com/">boolean-algebra.com.</a></small></figcaption>
+  </figure>
+  <p>The condition for `Y` is the following:</p>
+  `Y=\overline{C}+\overline{A}\cdot\overline{B}`
+<p>And the full expression before its simplification:</p>
+  <p>`Y=\overline{A}\overline{B}\overline{C}+\overline{A}\overline{B}C+\overline{A}B\overline{C}+A\overline{B}\overline{C}+AB\overline{C}`</p>
+  <p>`...`</p>
+  <p>`=\overline{C}+\overline{A}\cdot\overline{B}`</p>
+</li></ul>
+  <p>We now check if we have duplicate expressions across X and Y and cancel them so we won't use duplicate gates:</p>
+  `\overline{A}\cdot\overline{B}", "\overline{B}\cdot\overline{C}", "\overline{C}", "\cancel{\overline{A}\cdot\overline{B}}`
+  <p>We had one duplicate expression, let's begin with the implementation now:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665868563/CA_project_1/16.png">
+  <p>This circuit is in <i>PLA</i> format. This means that there is an AND plane and an OR plane. <u>The number of gates used here is 4.</u></p>
+  <h3 id="problem-3">3.</h3>
+  <h3>Build a circuit that shows the representation of numbers 0 to 7 on a LED display.</h3>
+  <ul>
+    <h3><li>Compose a truth table with binary outputs for every LED on the 7-Segment Display.</li><h3>
+      <p>7-Segment Display Truth Table:</p>
+      <table>
+        <tr>
+          <td>`A_"(input)"`</td>
+          <td>`B_"(input)"`</td>
+          <td>`C_"(input)"`</td>
+          <td>`O_"1(output)"`</td>
+          <td>`O_"2(output)"`</td>
+          <td>`O_"3(output)"`</td>
+          <td>`O_"4(output)"`</td>
+          <td>`O_"5(output)"`</td>
+          <td>`O_"6(output)"`</td>
+          <td>`O_"7(output)"`</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+      </table>
+      <p>These are the locations for the outputs of the display:</p>
+      <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665868563/CA_project_1/17.png">
+      <h3><li>Find the Boolean algebraic expressions for this truth table. Discuss why these expressions are useful in the context of building a circuit.</li></h3>
+      <p>Boolean expressions, especially for more complex circuits, are absolutely vital. <i>Programmable logic arrays (PLA)</i> and boolean expressions go hand in hand with building a circuit in an efficient and quick manner. This method is efficient because the AND and OR planes make the combinational circuit fast, its latency only being two gate delays. </p>
+      <p>The expressions for the seven outputs are as followed:</p>
+      `O_"1"=A\cdot\overline{B}+B\cdot\overline{C}+\overline{A}\cdotB`</p>
+      `O_"2"=\overline{B}\cdot\overline{C}+A\cdot\overline{B}+A\cdot\overline{C}` </p>
+      `O_"3"=\overline{A}\cdot\overline{C}+A\cdotC+B` </p>
+      `O_"4"=\overline{A}+\overline{B}\cdot\overline{C}+B\cdotC` </p>
+      `O_"5"=B\cdot\overline{C}+\overline{A}\cdot\overline{C}` </p>
+      `O_"6"=\overline{A}\cdot\overline{C}+A\cdot\overline{B}\cdotC+\overline{A}\cdotB+B\cdot\overline{C}`</p>
+      `O_"7"=\overline{B}+C+A`
+      <h3><li>Implement the circuit in Logisim. Make use of a 3-bit input and the Splitter component (from the Base library). Use the 7-Segment Display of the Input/Output library.</li></h3>
+      <p>After taking a closer look, it is easily noticable that there are a lot of duplicate expresions across every output here. After cancelling all of these duplicates and proceeding with the implementation, we get this circuit:</p>
+      <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665947916/CA_project_1/18.png">
+      <p>We will name this combinational circuit as <i>"Display PLA"</i> and store it as a separate circuit in <i>Logisim</i>.</p>
+      <p>Lastly, let's add a <i>7-Segment-Display</i> and put our inputs into a 3-bit splitter for the PLA. The outputs will be connected into the display:</p>
+      <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1665868563/CA_project_1/19.png">
+      <p>Total gates used is 16 (Excluding NOT gates).</p>
+    </ul>
+</div>
+</body></html>

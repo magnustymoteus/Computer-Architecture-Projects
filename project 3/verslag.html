@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-15">
+<title>Project 3: ALU (Pilichowski & Tikranian)</title>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    MathJax = {
+      loader: {load: ['input/asciimath', 'output/chtml']}
+    }
+    </script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+</script>
+<!-- Het "u" element (underline) is geherdefinieerd voor overline -->
+<style type="text/css">body { 
+	font-family: Cambria,Georgia,serif; 
+}
+#verslag {
+  text-align: left;
+  background-color:rgba(0,0,0,0.1);
+  padding: 1px 5px 1px 5px;
+}
+.inline-table {
+  display: inline-table;
+  margin: 0 10px 0 0;
+}
+table, td {
+  border: 1px solid black;
+}
+td {
+  padding: 5px;
+}
+img {
+  border: 1px solid gray;
+}
+ul p, small, table {
+  font-weight: 100;
+  font-size: 16px;
+}
+small {
+    font-size: 12px;
+}
+u {text-decoration: underline;}</style>
+
+</head>
+
+<body>
+
+<h1>Verslag</h1>
+<p><b>Titel:</b> <i>Project 3: ALU</i></p>
+<p>Dit verslag werd opgesteld door:<br>
+</p><ul>
+<li><b>Naam:</b> <i>Patryk Pilichowski</i><br>
+<b>Studentennummer:</b> <i>20220383</i><br>
+<b>Email adres:</b> <i>Patryk.Pilichowski@student.uantwerpen.be</i>
+</li>
+<li><b>Naam:</b> <i>Alik Tikranian</i><br>
+<b>Studentennummer:</b> <i>20204982</i><br>
+<b>Email adres:</b> <i>Alik.Tikranian@student.uantwerpen.be</i>
+</li>
+</ul>
+<b>Aantal man-uren besteed:</b> <i>`~`10 uur</i><br>
+<b>Moeilijkheidsgraad:</b> <i></i>3.5/10<p></p>
+
+<h2>Inhoud van de oplossing</h2>
+<p>De oplossing bestaat uit de volgende bestanden (geef alle bestanden op):</p>
+<ul>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1666732621/CA_project_3/adder.circ">adder.circ</a>: Component used for <a href="#adder">arithmetic</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1666732620/CA_project_3/comparator.circ">comparator.circ</a>: Component used for <a href="#comparator">comparison</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1666732621/CA_project_3/shifter.circ">shifter.circ</a>: Component used for <a href="#shifter">shifting</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1666732620/CA_project_3/overflow_passer.circ">overflow_passer.circ</a>: Component used for <a href="#overflow-passer">overflow control</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1666732621/CA_project_3/ALU_Group30.circ">ALU_Group30.circ</a>: Complete ALU (download all components above first and place everything in the same folder)</li>
+</ul>
+
+<div id="verslag">
+<h2>Verslag</h2>
+<h3 id="problem-1">1.</h3>
+<h3>Build an arithmetic logic unit (ALU) for 16-bit two's complement data words. ... You will
+  have to complete the '16-bit ALU' circuit in this assignment. You can only make use of
+  the Logisim libraries 'Wiring', 'Gates' and 'Plexers' (not e.g., 'Arithmetic'). ...</h3>
+<p id="ALU">This is our end result: </p>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666726931/CA_project_3/01.png">
+<p>We have a multiplexer which passes the correct operation based on the operation input. We also have an overflow passer, which passes overflow if one occurs and if the operation has overflow enabled. </p>
+<p>Let's go through every operation here: </p>
+<ul>
+  <li><h3>Generate 0 (Operation 0000)</h3></li>
+  <p>This a simple one, we pass a 16-bit constant with only zero's through the multiplexer to be the output.</p>
+  <li><h3>NOT (Operation 0001)</h3></li>
+  <p>The input `a` undergoes bitwise inversion in 1's complement. We do this by adding a 16-bit wide NOT gate.</p>
+  <li><h3>AND (Operation 0010)</h3></li>
+  <p>The inputs `a` and `b` are compared with the logical AND operator. This is done with a 16-bit wide AND gate.</p>
+  <li><h3>OR (Operation 0011)</h3></li>
+  <p>The inputs `a` and `b` are compared with the logical OR operator. This is done with a 16-bit wide OR gate.</p>
+  <li><h3 id="adder">ADD (Operation 0100) (2's complement)</h3></li>
+  <p>We can use our carry lookahead adder we used before:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666387737/CA_project_2/15.png">
+  <p>We don't need a carry-in, so let it be a constant zero. Let's also name it <i>add</i> for convenience:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666716432/CA_project_3/02.png">
+  <br><small>Our overflow output goes to the overflow passer, we will discuss that component later.</small>
+  <li><h3>SUB (Operation 0101) (2's complement)</h3></li>
+  <p>We can reuse our adder but input `b` is inverted and for it to be in 2's complement we must let carry-in be a constant one:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666718050/CA_project_3/03.png">
+  <br><small>This works just like a (2's complement) 16-bit subtractor.</small>
+  <li><h3>LT (Operation 0110) (2's complement)</h3></li>
+  <p>When `a` is lesser than `b`, every bit except the least significant bit must be zero (1 in decimal notation). Otherwise every bit must be zero (0 in decimal notation).</p>
+  <p>What we can do is see if `a-b` is lesser than zero. If that is the case then `a` is indeed lesser than `b`. We can already use our subtractor and fetch the subtraction as input.</p>
+  <p>However, we must also watch out if the subtraction produced an overflow. If it did then we must negate the comparison. Thus, we also take overflow as input:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666719279/CA_project_3/04.png">
+  <br><small>`"lt" = "bit"_"15"\oplus"Overflow"`
+  <br>Here we split the input and check if the MSB of the subtraction is 1, which in 2's complement means if it's a negative number.
+  <br>Notice that we also have a XOR gate here. This is so that when overflow occurs the output becomes a negation of what it normally would it be.</small>
+  <li><h3>GT (Operation 0111) (2's complement)</h3></li>
+  <p>This time, we want to check if `a-b` is greater than zero. We can build on our previous <i>lt</i> operator:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666722242/CA_project_3/05.png">
+  <br><small>`"gt" = (\neg"bit"_"15"\wedge\bigvee_{i=0}^14 "bit"_i)\oplus"overflow"`
+  <br>We check if the MSB is zero but also if there is at least one non-MSB bit that is 1.<br>The result becomes its negation if overflow is 1, just like for <i>lt</i>.</small>
+  <li><h3 id="comparator">EQ (Operation 1000)</h3></li>
+  <p>For a number to be equal to another number is to neither be greater nor lesser than that number.</p>
+  <p>This means that we can build on our previous component again. We could take both <i>gt</i> and <i>lt</i> and if both are false, <i>eq</i> is true:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666724005/CA_project_3/06.png">
+  <br><small>`"eq" = \neg"lt" \wedge \neg"gt" `</small>
+  <li><h3>NEQ (Operation 1001)</h3></li>
+  <p>We can add a <i>neq</i> to our component by simply negating the output of <i>eq</i>:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666726013/CA_project_3/07.png">
+  <br><small>`"neq" = \neg"eq"`</small>
+  <p>This could be considered a complete 16-bit comparator. However it is dependable on the difference of the two inputs which makes the performance of the operation worse.</p>
+  <li><h3>INV (Operation 1010) (2's complement)</h3></li>
+  <p>We need to invert `a` but in 2's complement this time. We can reuse our subtractor and subtract 0 by `a` and then add a carry:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666727561/CA_project_3/08.png">
+  <br><small>In this component, we treat `a` as `b` and `a` as 16-bit wide constant `0`.</small>
+  <li><h3>SLL (Operation 1011) (2's complement)</h3></li>
+  <p>Let's build all shift operations as one component.</p>
+  <p>In order to shift our 16-bit input to the left, we can split it and then move every 1 bit to the next position in another splitter:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666730315/CA_project_3/09.png">
+  <br><small>The LSB of the output is just constant zero.</small>
+  <li><h3>SRL (Operation 1100) (2's complement)</h3></li>
+  <p>This is just the opposite of <i>sll</i>:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666730394/CA_project_3/10.png">
+  <br><small>Here it is the MSB that is constant zero.</small>
+  <li><h3 id="shifter">SLA (Operation 1101) (2's complement)</h3></li>
+  <p>While <i>sla</i> is just like <i>sll</i>, <i>sla</i> can produce overflow if the MSB changes after the operation. In 2's complement, when the MSB changes, the sign of the number also changes.</p>
+  <p>We can use just one XOR gate to detect if there is an overflow:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666735248/CA_project_3/12.png">
+  <br><small>`"overflow"_"sla" = a_15\oplus"result"_15`
+  <br>Oveflow occurs here only if the MSB of the inputs are different.</small>
+  <p>The bigger picture:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666731496/CA_project_3/13.png">
+  <li><h3>SRA (Operation 1110) (2's complement)</h3></li>
+  <p>This is just like <i>srl</i> but the sign does not shift to the right but stays like it was.</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666730426/CA_project_3/11.png">
+  <p>We've now got a shifter component ready to use:</p>
+  <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666732388/CA_project_3/15.png">
+  <li><h3>NOOP (Operation 1111)</h3></li>
+  <p>Simply plug in `a` into the last input of the multiplexer.</p>
+</ul>
+<h3 id="overflow-passer">Overflow Control</h3>
+<p>The overflow passer is a multiplexer that passes overflow according to the correct operation. Constant zero's are for operations that can't have overflow.</p>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666732092/CA_project_3/14.png">
+</div>
+</body>
+</html>

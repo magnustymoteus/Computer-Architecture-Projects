@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-15">
+<title>Project 4: Memory (Patryk Pilichowski)</title>
+<script>
+    MathJax = {
+      loader: {load: ['input/asciimath', 'output/chtml']}
+    }
+    </script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+</script>
+<!-- Het "u" element (underline) is geherdefinieerd voor overline -->
+<style type="text/css">body { 
+	font-family: Cambria,Georgia,serif; 
+}
+#verslag {
+  text-align: left;
+  background-color:rgba(0,0,0,0.1);
+  padding: 1px 5px 1px 5px;
+}
+.inline-table {
+  display: inline-table;
+  margin: 0 10px 0 0;
+}
+table, td {
+  border: 1px solid black;
+}
+td {
+  padding: 5px;
+}
+img {
+  border: 1px solid gray;
+}
+ul p, small, table {
+  font-weight: 100;
+  font-size: 16px;
+}
+small {
+    font-size: 12px;
+}
+u {text-decoration: underline;}</style>
+
+</head>
+
+<body>
+
+<h1>Verslag</h1>
+<p><b>Titel:</b> <i>Project 4: Memory</i></p>
+<p>Dit verslag werd opgesteld door:<br>
+</p><ul>
+<li><b>Naam:</b> <i>Patryk Pilichowski</i><br>
+<b>Studentennummer:</b> <i>20220383</i><br>
+<b>Email adres:</b> <i>Patryk.Pilichowski@student.uantwerpen.be</i>
+</li>
+</ul>
+<b>Aantal man-uren besteed:</b> <i>`~`7 uur</i><br>
+<b>Moeilijkheidsgraad:</b> <i></i>5/10<p></p>
+
+<h2>Inhoud van de oplossing</h2>
+<p>De oplossing bestaat uit de volgende bestanden (geef alle bestanden op):</p>
+<ul>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669287591/CA_project_4/register_patryk.circ">register_patryk.circ</a>: Solution for <a href="#problem-1">problem 1</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669287591/CA_project_4/counter_patryk.circ">counter_patryk.circ</a>: Solution for <a href="#problem-2">problem 2</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669287591/CA_project_4/traffic_lights_patryk.circ">traffic_lights_patryk.circ</a>: Solution for <a href="#problem-3">problem 3</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669287591/CA_project_4/stack_patryk.circ">stack_patryk.circ</a>: Solution for <a href="#problem-4">problem 4</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669287591/CA_project_4/CLA_patryk.circ">CLA_patryk.circ</a>: Carry lookahead adder used in the counter and the stack</li>
+</ul>
+
+<div id="verslag">
+<h2>Verslag</h2>
+<h3 id="problem-1">1.</h3>
+<h3>Build a 16-bit register using 16 D flip-flops (from Logisim) that are updated on the falling edge (beware: in Logisim D, flip-flops are by default set to update on rising edge).</h3>
+<p>We will use 16 D flip-flops which have a clock input, a 1-bit data input taken from a split 16-bit input, a write and reset inputs, and a 1-bit data output of the stored data. <br>
+The outputs in all of the flip-flops are taken into a splitter accordingly to form a memorised 16-bit output, we now have a 16-bit register:</p>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669288043/CA_project_4/01.png">
+<h3>Build a register file made of 8 of your own 16-bit registers. The register file must be able to read from and write to specified registers. In this case, the register file reads from two registers, and can possibly write to a register at the same time.</h3>
+<p>We will use 8 of the 16-bit registers we made previously and then make a write/reset logic so that we only reset/write to the register <i>rd</i>.
+We can also read from two registers <i>rs</i> and <i>rt</i>:</p>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669288043/CA_project_4/02.png"> <br>
+<small>Here we use two different multiplexers for rs and rt as well as a 3-bit decoder so that the correct register is written/reset.</small><br>
+<p>This is our reset/write logic: </p>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669288043/CA_project_4/03.png">
+<h3 id="problem-2">2.</h3>
+<h3>Build a counter using your own 16-bit carry lookahead adder and 16-bit register.</h3>
+<p>We need to build a counter that counts from `0` to `"D"_("input")-1`. We can do this with our register, carry-lookahead adder and the <i>comparator</i> component: </p>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669310156/CA_project_4/04.png">
+<br><small>The counter increments itself on every falling edge of the clock only if it is lesser than `"D"_"input"`</small><br><br>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669311865/CA_project_4/11.png">
+<h3 id="problem-3">3.</h3>
+<h3>Build a finite-state machine that implements a traffic light system on a cross section.</h3>
+<p>This is the graph for light 1:</p>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669313916/CA_project_4/13.png">
+<p>This is the graph for light 2:</p>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669313819/CA_project_4/12.png">
+<p>We will build a traffic light circuit that works with all traffic lights. However, we will have 4 inputs: `"Red"`, `"Yellow"`, `"Green"`, and `"Initial"`. </p>
+<p>The inputs with the name of a color denote the beginning of the interval of their respective color while `"Initial"` denotes the first color that is to be displayed.</p>
+<p>For this, we need an equality comparator which outputs true if two given inputs are equal, otherwise false:</p>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669310156/CA_project_4/06.png">
+<p>Now we can use the equality circuit to begin our light with `"Initial"` and then check each time if the current counter value is equal to a different color. If so, then we change the light to that color:</p>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669310156/CA_project_4/05.png">
+<br><small>We also use SR flip-flops and a 2-bit decoder here to accomplish our goal. An SR flip-flop is set when the counter equals to one of the color inputs, and are reset whenever that is the case for a different color.</small><br>
+<p>We can now apply our built circuit to construct 2 traffic lights with different intervals:</p>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669310156/CA_project_4/08.png">
+<h3 id="problem-4">4.</h3>
+<h3>(Bonus) Build a 16-bit stack using the logisim RAM element.</h3>
+</div>
+</body>
+</html>
