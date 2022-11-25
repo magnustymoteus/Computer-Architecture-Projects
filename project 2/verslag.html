@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-15">
-<title>Project 4: Memory (Patryk Pilichowski)</title>
+<title>Project 2: Adders (Patryk Pilichowski & Alik Tikranian)</title>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script>
     MathJax = {
       loader: {load: ['input/asciimath', 'output/chtml']}
@@ -47,64 +48,250 @@ u {text-decoration: underline;}</style>
 <body>
 
 <h1>Verslag</h1>
-<p><b>Titel:</b> <i>Project 4: Memory</i></p>
+<p><b>Titel:</b> <i>Project 2: Adders</i></p>
 <p>Dit verslag werd opgesteld door:<br>
 </p><ul>
 <li><b>Naam:</b> <i>Patryk Pilichowski</i><br>
 <b>Studentennummer:</b> <i>20220383</i><br>
 <b>Email adres:</b> <i>Patryk.Pilichowski@student.uantwerpen.be</i>
 </li>
+<li><b>Naam:</b> <i>Alik Tikranian</i><br>
+<b>Studentennummer:</b> <i>20204982</i><br>
+<b>Email adres:</b> <i>Alik.Tikranian@student.uantwerpen.be</i>
+</li>
 </ul>
-<b>Aantal man-uren besteed:</b> <i>`~`7 uur</i><br>
-<b>Moeilijkheidsgraad:</b> <i></i>5/10<p></p>
+<b>Aantal man-uren besteed:</b> <i>`~`8 uur</i><br>
+<b>Moeilijkheidsgraad:</b> <i></i>2.5/10<p></p>
 
 <h2>Inhoud van de oplossing</h2>
 <p>De oplossing bestaat uit de volgende bestanden (geef alle bestanden op):</p>
 <ul>
-<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669287591/CA_project_4/register_patryk.circ">register_patryk.circ</a>: Solution for <a href="#problem-1">problem 1</a></li>
-<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669287591/CA_project_4/counter_patryk.circ">counter_patryk.circ</a>: Solution for <a href="#problem-2">problem 2</a></li>
-<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669287591/CA_project_4/traffic_lights_patryk.circ">traffic_lights_patryk.circ</a>: Solution for <a href="#problem-3">problem 3</a></li>
-<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669287591/CA_project_4/stack_patryk.circ">stack_patryk.circ</a>: Solution for <a href="#problem-4">problem 4</a></li>
-<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669287591/CA_project_4/CLA_patryk.circ">CLA_patryk.circ</a>: Carry lookahead adder used in the counter and the stack</li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1666092786/CA_project_2/adder.circ">adder.circ</a>: Solution for <a href="#problem-1">problem 1</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1666388455/CA_project_2/ripple_carry_adder.circ">ripple_carry_adder.circ</a>: Solution for <a href="#problem-2">problem 2</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1666388114/CA_project_2/carry_lookahead_adder.circ">carry_lookahead_adder.circ</a>: Solution for <a href="#problem-3">problem 3</a></li>
+<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1666389198/CA_project_2/comparison.circ">comparison.circ</a>: Solution for <a href="#problem-4">problem 4</a></li>
 </ul>
 
 <div id="verslag">
 <h2>Verslag</h2>
 <h3 id="problem-1">1.</h3>
-<h3>Build a 16-bit register using 16 D flip-flops (from Logisim) that are updated on the falling edge (beware: in Logisim D, flip-flops are by default set to update on rising edge).</h3>
-<p>We will use 16 D flip-flops which have a clock input, a 1-bit data input taken from a split 16-bit input, a write and reset inputs, and a 1-bit data output of the stored data. <br>
-The outputs in all of the flip-flops are taken into a splitter accordingly to form a memorised 16-bit output, we now have a 16-bit register:</p>
-<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669288043/CA_project_4/01.png">
-<h3>Build a register file made of 8 of your own 16-bit registers. The register file must be able to read from and write to specified registers. In this case, the register file reads from two registers, and can possibly write to a register at the same time.</h3>
-<p>We will use 8 of the 16-bit registers we made previously and then make a write/reset logic so that we only reset/write to the register <i>rd</i>.
-We can also read from two registers <i>rs</i> and <i>rt</i>:</p>
-<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669288043/CA_project_4/02.png"> <br>
-<small>Here we use two different multiplexers for rs and rt as well as a 3-bit decoder so that the correct register is written/reset.</small><br>
-<p>This is our reset/write logic: </p>
-<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669288043/CA_project_4/03.png">
-<h3 id="problem-2">2.</h3>
-<h3>Build a counter using your own 16-bit carry lookahead adder and 16-bit register.</h3>
-<p>We need to build a counter that counts from `0` to `"D"_("input")-1`. We can do this with our register, carry-lookahead adder and the <i>comparator</i> component: </p>
-<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669310156/CA_project_4/04.png">
-<br><small>The counter increments itself on every falling edge of the clock only if it is lesser than `"D"_"input"`</small><br><br>
-<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669311865/CA_project_4/11.png">
-<h3 id="problem-3">3.</h3>
-<h3>Build a finite-state machine that implements a traffic light system on a cross section.</h3>
-<p>This is the graph for light 1:</p>
-<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669313916/CA_project_4/13.png">
-<p>This is the graph for light 2:</p>
-<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669313819/CA_project_4/12.png">
-<p>We will build a traffic light circuit that works with all traffic lights. However, we will have 4 inputs: `"Red"`, `"Yellow"`, `"Green"`, and `"Initial"`. </p>
-<p>The inputs with the name of a color denote the beginning of the interval of their respective color while `"Initial"` denotes the first color that is to be displayed.</p>
-<p>For this, we need an equality comparator which outputs true if two given inputs are equal, otherwise false:</p>
-<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669310156/CA_project_4/06.png">
-<p>Now we can use the equality circuit to begin our light with `"Initial"` and then check each time if the current counter value is equal to a different color. If so, then we change the light to that color:</p>
-<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669310156/CA_project_4/05.png">
-<br><small>We also use SR flip-flops and a 2-bit decoder here to accomplish our goal. An SR flip-flop is set when the counter equals to one of the color inputs, and are reset whenever that is the case for a different color.</small><br>
-<p>We can now apply our built circuit to construct 2 traffic lights with different intervals:</p>
-<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669310156/CA_project_4/08.png">
-<h3 id="problem-4">4.</h3>
-<h3>(Bonus) Build a 16-bit stack using the logisim RAM element.</h3>
+<h3>Build a 1-bit full adder (with carry in and carry out).</h3>
+<p>Let's create a truth table for the full adder:</p>
+    <table>
+        <tr>
+          <td>`A_"(input)"`</td>
+          <td>`B_"(input)"`</td>
+          <td>`"CarryIn"_"(input)"`</td>
+          <td>`"Sum"_"(output)"`</td>
+          <td>`"CarryOut"_"(output)"`</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+      </table>
+      <p>`"Sum"=A\cdot\overline{B}\cdot\overline{"CarryIn"}+\overline{A}\cdot\overline{B}\cdot"CarryIn"+A\cdotB\cdot"CarryIn"+\overline{A}\cdotB\cdot\overline{"CarryIn"}`</p>
+      <p>The sum is true only if the odd numbers of inputs are also true. With this in mind, we can simplify the expression into a XOR (Exclusive OR) operation:</p>
+      <p>`"Sum"=A\oplusB\oplus"CarryIn"`</p>
+      <p>`"CarryOut"=B\cdot"CarryIn"+A\cdot"CarryIn"+A\cdotB`</p>
+      <p>Let's turn this into a circuit:</p>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666093025/CA_project_2/01.png">
+    <br><small>The latency here is `2E` with `E="Propagation Delay"`</small>
+    <br><small>Number of gates used is `5` (excluding NOT)</small>
+      <p>To use the least gates, we used just a single XOR gate to calculate the sum.</p>
+      <p>For the XOR gate to work in <i>Logisim</i> however, we had to change its multiple-input behavior into "<i>When an odd number are on</i>":</p>
+      <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666093148/CA_project_2/02.png">
+      <h3 id="problem-2">2.</h3>
+      <h3>Build a circuit of a 16-bit two's complement ripple carry adder.</h3>
+      <p>Before we build a 16-bit adder, let's build a 4-bit adder first. Then we can build a 16-bit adder with 4`\times`4-bit adders.</p>
+      <p>For a 4-bit adder we need 4`\times`1-bit adders:</p>
+      <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666094861/CA_project_2/04.png">
+    <br><small>The latency here is `2E\times4=8E` with `E="Propagation Delay"`</small>
+    <br><small>Number of gates used is `5\times4=20` (excluding NOT)</small>
+      <p>Notice that <i>Logisim</i> works with the two's complement representation by default, thus adding <i>ainvert</i> and <i>binvert</i> is unnecessary:</p>
+      <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666095604/CA_project_2/05.png">
+      <p>We are also using 4-bit wide inputs and splitting them with the <i>splitter</i> component. </p>
+      <p>Furthermore, each non-LSB (least significant bit) adder is dependent on the previous adder to get its `"CarryIn"` value. This makes the ripple carry adder slow for large bit operations.</p>
+      <p>Let's use the 4-bit adders to finally create a 16-bit adder now:</p>
+      <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666099022/CA_project_2/06.png">
+      <h3>What is the number of gates you used to build your 16-bit ripple carry adder?</h3>
+      <p>Number of gates used is `20\times4=80` (excluding NOT)</p>
+      <p>The amount of gates needed is linearly proportional to number of bits:</p>
+      <div id="ripple_gates" style="width:100%;max-width:700px"></div>
+      <br><small>You could say that the formula for the number of gates here is `5\times\"#bits"`.</small>
+      <h3>What is the latency (number of AND/OR ports traversed) when calculating the sum using a 16-bit ripple carry adder?</h3>
+      <p>The latency here is `8E\times4=32E` with `E="Propagation Delay"`</p>
+      <p>The latency increases linearly, again:</p>
+      <div id="ripple_latency" style="width:100%;max-width:700px"></div>
+      <br><small>You could say that the formula for the latency of a ripple carry adder is `2\times\"#bits`.</small>
+    <h3>Think about a way how overflow can be determined from carry outs. Overflow happens for example in these cases: 32767 + 1 = -32768 or -32768 + (-1) = 32767. Add an output bit denoting overflow to the circuit containing your 16-bit two's complement adder.</h3>
+     <p>`"Overflow"=A\cdot\B\cdot\overline{"Sum"}+\overline{A}\cdot\overline{B}\cdot"Sum"`</p>
+     <p>Let's put this into practice:</p>
+     <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666100537/CA_project_2/08.png">
+     <br><small>The latency here is `2E` with `E="Propagation Delay"`</small>
+    <br><small>Number of gates used is `3` (excluding NOT)</small>
+    <p>The overflow detector can now be added to the full-adder:</p>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666101016/CA_project_2/09.png">
+    <br><small>The latency here is `2E+2E=4E` with `E="Propagation Delay"`</small>
+    <br><small>Number of gates used is `5+3=8` (excluding NOT)</small>
+    <p>This is the 16-bit adder with the overflow detector for the MSB (most significant bit):</p>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666101016/CA_project_2/07.png">
+    <p>Number of gates used is `20\times4+3=83` (excluding NOT)</p>
+    <p>The latency here is `8E\times4+2E=34E` with `E="Propagation Delay"`</p>
+    <h3 id="problem-3">3.</h3>
+    <h3>Build a circuit of a 16-bit two's complement carry lookahead adder using four 4-bit adder blocks.</h3>
+    <ul>
+      <li><h3>Build a circuit for a 4-bit adder block. ...</h3>
+    <p>This time, our adders won't output `"CarryOut"` as the <i>lookahead carry unit (LCU)</i> will do all of them instead. For inputs we need `a`, `b`, and `"CarryIn"`. We also need to output the sum, carry propagation `p`, and carry generation `g` for <i>LCU</i> to use as inputs.</p>
+    <p>A carry gets generated when A and B is true:<p>
+    <p>`g=A\cdotB`</p>
+    <p>`"CarryIn"` gets propagated further only when either A or B is true:</p>
+    <p>`p=A\oplusB`</p>
+    <p>However, notice that we can also apply `A+B` and it won't make a difference to the logic as when A and B are true, the carry is 1 anyways because it is then generated.</p>
+    <p>An OR gate typically uses less transistors than a XOR gate. Therefore, let's implement `A+B` for `p` instead:</p>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666219108/CA_project_2/10.png">
+    <br><small>The latency here is `1E` with `E="Propagation Delay"`</small>
+    <br><small>Number of gates used is `3` (excluding NOT)</small></li>
+    <p>Unlike in a ripple carry adder, we need to build a unit which will calculate the carry's in parallel. For this we will receive 4 bit wide `p_0"-"p_3` (carry's propagated) and `g_0"-"g_3` (carry's generated) inputs from 4 adders as well as `c_0` which is the `"CarryIn"` input of the entire 4-bit adder block. 
+    <p>Furthermore, our outputs will be `c_1"-"c_3`, which are our predicted carry's that will be given to the adders. Notice that we don't have a `c_4`, as we will be outputting `GG` and `PG` instead. <i>Group propagate</i> and <i>group generate</i> are necessary as inputs to an <i>LCU</i> that is working with larger bits.</p>
+      Let's build the <i>LCU</i>:</p>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666287563/CA_project_2/11.png">
+    <br><small>The latency here is `2E` with `E="Propagation Delay"`</small>
+    <br><small>Number of gates used is `14`</small>
+    <p>We have everything we need for a 4 bit <i>carry lookahead (CLA) adder</i>:</p>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666291838/CA_project_2/12.png">
+    <br><small>Number of gates used is `3\times4+14=26` (Excluding NOT)</small>
+    <br><small>The longest path here:
+      <ol>
+        <li>All adders calculate `p`, `g`, and `"sum"` in parallel (all adders except <i>LSB</i> haven't received correct `"CarryIn"` from the <i>LCU</i> yet, therefore incorrect `"sum"` as of now)`=> 1` gate delay</li>
+        <li>LCU receives `p_("0-3")`, `g_("0-3")` and calculates `c_0"-"c_3`, `PG`, and `GG` in parallel `=> 2` gate delays</li>
+        <li>Adders receive `"CarryIn"` and calculate the correct `"sum"` `=> 1` gate delay </li>
+      </ol>
+      `=> 4` gate delays in total `->` `4E` with `E="Propagation Delay"`
+    </small>
+    <li><h3>Build a circuit of a 16-bit two's complement carry lookahead adder by creating a "carry lookahead unit" that uses four of your own 4-bit adder blocks.</h3></li>
+    <p>We can expand to a 16-bit <i>CLA adder</i> with everything we already have.</p>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666295894/CA_project_2/13.png">
+    <p>Here, the purpose of `PG` and `GG` starts to become clear. Every 4-bit <i>CLA</i> block has its own <i>group propagation/group generation</i> which functions identically like the 1-bit adder's <i>propagation/generation</i>. Both go as inputs into the <i>LCU</i> of its adder block. Notice that this 16-bit <i>CLA</i> adder has its own `PG` and `GG` in case it's used by something like a 32-bit <i>CLA</i> adder.</p>
+    <li><h3>What is the number of gates you used to build your 16-bit carry lookahead adder?</h3></li>
+    Number of gates used is `26\times4+14=118` (excluding NOT)
+    <li><h3>What is the latency (number of AND/OR ports traversed) when calculating the sum using a 16-bit carry lookahead adder?</h3></li>
+    <p>The longest path here:
+      <ol>
+        <li>The 4-bit <i>CLA</i> adders calculate their own `PG`, `GG`, `"sum"` in parallel (though without `c_0"-"c_3` the sum is incorrect as of now) `=> 4` gate delays</li>
+        <li>LCU receives `p_("0-3")`, `g_("0-3")` then calculates `c_0"-"c_3`, and its own `PG`, `GG` in parallel `=> 2` gate delays</li>
+        <li>4 bit <i>CLA</i> adders receive `"CarryIn"` and calculate the correct `"sum"` `=> 1` gate delay</li>
+      </ol>
+      `=> 7` gate delays in total `->` `7E` with `E="Propagation Delay"`
+      <p>We can conclude that switching from a ripple carry adder to a carry lookahead adder becomes a compromise between the number of gates and the latency. In this case, the compromise is worth it.</p>
+    </p>
+    <li><h3>On this 16-bit adder circuit, create an extra output bit, denoting overflow.</h3></li>
+    <p>Let's use the same circuit we used for the ripple carry adder:</p>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666385037/CA_project_2/14.png">
+    <br><small>Number of gates used is `3+3=6`</small>
+    <br><small>The latency is `2E+1E=3E` with `E="Propagation Delay"`</small>
+    <p>Now the 16-bit adder with the overflow detector:</p>
+    <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666387737/CA_project_2/15.png">
+    <br><small>Number of gates used is `118+3=121`</small>
+    <br><small>The latency is `7E+2E=9E` with `E="Propagation Delay"`</small>
+    </ul>
+    <h3 id="problem-4">4.</h3>
+    <h3>Verify that your 16-bit two's complement carry lookahead adder is correct.</h3>
+    <ul>
+      <li><h3>Do this by connecting two 16-bit inputs to both the carry lookahead 16-bit adder and
+        the ripple carry 16-bit adders, and comparing the outputs</h3></li>
+      <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1666388921/CA_project_2/16.png">
+      <p>After trying different input combinations, the outputs matched every time.</p>
+      <li><h3>Compare the carry lookahead 16-bit adder and the ripple carry 16-bit adders by
+        counting the latency of both adders.</h3></li>
+        <p>16-bit Carry Lookahead Adder (Overflow Detector): `9E`</p>
+        16-bit Ripple Carry Adder (Overflow Detector): `34E`
+    </ul>
 </div>
 </body>
+<script>
+  const config = {
+  displayModeBar: false,
+}
+  class Plot {
+    constructor(data, layout) {
+      this.data = data;
+      this.layout = layout;
+    }
+  }
+  const ripple_gates = new Plot([{
+    x: [0, 1, 4, 8, 12, 16],
+    y: [0,5,20,40,60,80],
+    mode:"lines"
+  }],  {
+    xaxis: {range: [0, 16], title: "Number of bits", fixedrange: true},
+    yaxis: {range: [0, 80], title: "Number of gates (Without NOT)", fixedrange:true},  
+    title: "Number of gates needed for ripple carry adder (no overflow detector)"
+  });
+
+  const ripple_latency = new Plot([{
+    x: [0, 1, 4, 8, 12, 16],
+    y: [0,2,8,16,24,32],
+    mode:"lines"
+  }],  {
+    xaxis: {autorange: true, title: "Number of bits", fixedrange: true},
+    yaxis: {autorange: true, title: "Propagation Delay", fixedrange:true},  
+    title: "Latency of ripple carry adder (no overflow detector)"
+  });
+
+  Plotly.newPlot("ripple_gates", ripple_gates.data, ripple_gates.layout, config);
+  Plotly.newPlot("ripple_latency", ripple_latency.data, ripple_latency.layout, config);
+  </script>
 </html>
