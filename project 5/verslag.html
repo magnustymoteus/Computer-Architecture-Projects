@@ -59,7 +59,7 @@ u {text-decoration: underline;}</style>
   <b>Email adres:</b> <i>Daria.Matviichuk@student.uantwerpen.be</i>
   </li>
 </ul>
-<b>Aantal man-uren besteed:</b> <i>`~`8,5 uur</i><br>
+<b>Aantal man-uren besteed:</b> <i>`~`10 uur</i><br>
 <b>Moeilijkheidsgraad:</b> <i></i>5.5/10<p></p>
 
 <h2>Inhoud van de oplossing</h2>
@@ -82,8 +82,46 @@ u {text-decoration: underline;}</style>
 
 <div id="verslag">
 <h2>Verslag</h2>
-<h3 id="problem-1">1.</h3>
+<h3>Simple Datapath - Overview</h3>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669736409/CA_project_5/06.png">
+<p>We will quickly discuss all of the components here as well as what happens in the datapath for every type of instruction.</p>
+<h3>Program Counter</h3>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669736400/CA_project_5/01.png">
+<p>The program counter is a counter that either increments itself or uses a branch. The counter determines the current instruction.</p>
+<p>We are not using branch or jump instructions yet. However, when branch absolute is asserted, the PC becomes the branch value.</p>
+<p>On the other hand, when branch relative is asserted, the PC increments itself by the branch value `+ 1` because it is signed.</p>
+<p>In the standard case, when there is no branch, the PC increments itself on falling edge by 1.</p>
 
+<h3>Instruction Memory</h3>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669739493/CA_project_5/07.png">
+<p>There is not much to discuss about the instruction memory. It is self-evident that it holds all the instructions. 
+<br>The PC reads the address of the current instruction and its content is outputted as <i>instruction</i>.
+<br>To not forget of course, we also have the clock, reset and load enable input.
+</p> 
+
+<h3>Register File</h3>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669739854/CA_project_5/08.png">
+<p>The register file is the most efficient type of memory performance-wise.
+<br>It holds operands used for instruction operations.</p>
+<ul>
+  <li>RegDst: The destination register.</li>
+  <li>RegSrc: The source register. Mostly used as the first operand in an operation.</li>
+  <li>RegT: The second source register. Mostly used as the second operand in an operation.</li>
+  <li>RegWrite: Denotes if writing to a register is enabled.</li>
+  <li>RegDstData: The data that is to be written to RegDst.</li>
+  <li>RegSrcData: Content of register RegSrc</li>
+  <li>RegTData: Content of register RegT</li>
+  <li>r0-r7: Content of the respective register, exists for debugging purposes.</li>
+</ul>
+
+<h3>Data Memory</h3>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669742624/CA_project_5/09.png">
+<p>...</p>
+<h3>Control</h3>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669736408/CA_project_5/02.png">
+<p>...</p>
+<h3>Types of Instructions</h3>
+<p>...</p>
 </div>
 </body>
 </html>
