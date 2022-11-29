@@ -54,6 +54,10 @@ u {text-decoration: underline;}</style>
 <b>Studentennummer:</b> <i>20220383</i><br>
 <b>Email adres:</b> <i>Patryk.Pilichowski@student.uantwerpen.be</i>
 </li>
+<li><b>Naam:</b> <i>Daria Matviichuk</i><br>
+  <b>Studentennummer:</b> <i>s0221485</i><br>
+  <b>Email adres:</b> <i>Daria.Matviichuk@student.uantwerpen.be</i>
+  </li>
 </ul>
 <b>Aantal man-uren besteed:</b> <i>`~`7 uur</i><br>
 <b>Moeilijkheidsgraad:</b> <i></i>5/10<p></p>
@@ -105,7 +109,27 @@ We can also read from two registers <i>rs</i> and <i>rt</i>:</p>
 <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669310156/CA_project_4/08.png">
 <h3 id="problem-4">4.</h3>
 <h3>(Bonus) Build a 16-bit stack using the logisim RAM element.</h3>
+<p>In order to implement a fully functional stack, we will need:</p>
+  <ul>
+    <li>D Flip-flops so we can "synchronize" the inputs with the clock.</li>
+    <li>Our 16-bit register as the stack pointer.</li>
+    <li>Carry Lookahead Adders to add and subtract the stack pointer.</li>
+    <li>A custom exception detector, in cases where pop is asserted but the stack is empty.</li>
+    <li>Basic components like logic gates and multiplexers.</li>
+  </ul>
 <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669310156/CA_project_4/09.png">
+<p>We have 2 D flip-flops, the first denotes 0 for push or no operation and 1 for a pop operation.</p>
+<p>The second flip-flop <i>OpSync</i> is asserted when there is any operation occurring like push/pop.</p>
+<p>Both of the flip-flops are triggered on the rising edge.</p>
+<p>The stack pointer register has write enabled only while <i>OpSync</i> is asserted.</p>
+<p>When a successful operation occurs, the stack pointer is either incremented or decremented depending on the output of the multiplexer. This multiplexer is dependent on the <i>Push/Pop</i> flip-flop.<br>
+If <i>OpSync</i> is deasserted, then the multiplexer is disabled.</p>
+<p>There are 3 more multiplexers, one selects the first pushable address or the first pushable address `- 1`, the second is the data being the input (for push) or 0 (for pop). <br>
+Finally, the last multiplexer selects out of the content of the current address or a 0.</p>
+
+<p>This is our exception detector:<br>
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669310156/CA_project_4/10.png"></p>
+<p>Here, an error is asserted when the stack pointer is `0` but pop is asserted, when push and pop are both asserted, and when an CLA overflow occurs (which might be unnecessary, but we still included it). </p>
 </div>
 </body>
 </html>
