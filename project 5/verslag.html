@@ -120,8 +120,52 @@ u {text-decoration: underline;}</style>
 <h3>Control</h3>
 <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669736408/CA_project_5/02.png">
 <p>...</p>
-<h3>Types of Instructions</h3>
-<p>...</p>
+<h3>Overview of Instructions</h3>
+<ul>
+<li>Unary Operations
+  <ul>
+    <li>Zero: a constant gets written into the register <i>rd (RegDst)</i></li>
+    <li>Not: an unsigned inversion of register <i>rs (RegSrc)</i> will be written to register <i>rd</i></li>
+    <li>Inv: a signed inversion of register <i>rs</i> will be written into register <i>rd</i></li>
+    <li>Sll: a shift left logical of register <i>rs</i> will be written into register <i>rd</i></li>
+    <li>Srl: a shift right logical of register <i>rs</i> will be written into register <i>rd</i></li>
+    <li>Sla: a shift left arithmetic of register <i>rs</i> will be written into register <i>rd</i></li>
+    <li>Sra: a shift right arithmetic of register <i>rs</i> will be written into register <i>rd</i></li>
+    <li>Inc: an incrementation of register <i>rs</i> will be written into register <i>rd</i></li>
+    <li>Dec: a decrementation of register <i>rs</i> will be written into register <i>rd</i></li>
+    <li>Cp: a copy of register <i>rs</i> will be written into register <i>rd</i></li>
+  </ul>
+</li>
+
+<li>Binary Operations
+  <ul>
+    <li>And: An AND operation is performed with <i>rs</i> and <i>rt (RegT)</i>, result gets written into the register <i>rd</i></li>
+    <li>Or: An OR operation is performed with <i>rs</i> and <i>rt</i>, result gets written into the register <i>rd</i></li>
+    <li>Add: An addition is performed with <i>rs</i> and <i>rt</i>, result gets written into the register <i>rd</i></li>
+    <li>Sub: a subtraction is performed with <i>rs</i> and <i>rt</i>, result gets written into the register <i>rd</i></li>
+    <li>Lt: a Less Than operation is performed with <i>rs</i> and <i>rt</i>, result gets written into the register <i>rd</i></li>
+    <li>Gt: a Greater Than operation is performed with <i>rs</i> and <i>rt</i>, result gets written into the register <i>rd</i></li>
+    <li>Eq: an equality is performed with <i>rs</i> and <i>rt</i>, result gets written into the register <i>rd</i></li>
+    <li>Neq: an inequality is performed with <i>rs</i> and <i>rt</i>, result gets written into the register <i>rd</i></li>
+  </ul>
+</li>
+
+<li>Memory Operations
+  <ul>
+    <li>Lw: In data memory, get the contents from address <i>$rs</i> `+ "sign-extended immediate"`. The contents are stored in register <i>rd</i></li>
+    <li>Sw: The reverse of Lw, store the contents of register <i>rd</i> into the address <i>$rs</i> `+ "sign-extended immediate"` in data memory.</li>
+  </ul>
+</li>
+
+<li>Immediate Operations
+  <ul>
+    <li>Ori: An OR operation is performed with <i>rd</i> and a bit-extended immediate, result gets written into the register <i>rd</i></li>
+    <li>Lui: A shift left logical operation is performed with a bit-extended immediate 8 times, result gets written into the register <i>rd</i></li>
+    <li>Addi: An addition is performed with <i>rd</i> and a bit-extended immediate, result gets written into the register <i>rd</i></li>
+    <li>Subi: A subtraction is performed with <i>rd</i> and a bit-extended immediate, result gets written into the register <i>rd</i></li>
+  </ul>
+</li>
+</ul>
 </div>
 </body>
 </html>
