@@ -119,7 +119,17 @@ u {text-decoration: underline;}</style>
 <p>Our data memory block uses a Logisim RAM unit (with seperate load and store ports) to load or to store words (lw and sw operations). The block has two operands: ALU Out (to calculate the offset) and RegSrc Data (to load the information from rs register).
 </p>
 <h3>Control</h3>
-<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669736408/CA_project_5/02.png">
+<img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669736408/CA_project_5/02.png"><br>
+<small><ul>
+  <li><i>Shift8</i> output is asserted when the <i>lui (Load upper immediate)</i> operation occurs. When asserted, the first operand of the ALU is 0 to ensure the shifted value remains unchanged.</li>
+<li><i>inc/dec</i> is asserted when an incrementation or decrementation occurs. When asserted, the datapath will use a constant 1 as a signed immediate. <br>Then depending if <i>rs</i> is to be incremented or decremented an addition or a subtraction occurs with the immediate as second operand.</li><br>
+<li><i>ALUSrc selects the second operand out of 4 possibilities: <i>RegTData</i>, <i>Signed Immediate</i>, <i>Unsigned Immediate</i>, and a constant 0.</li>
+<li><i>ALUOp selects the ALU operation that is to be performed in accordance with the current instruction.</li><br>
+<li><i>MemRead is asserted when the current instruction wants to read from the data memory (Load word).</li>
+ <li><i>MemWrite is asserted when the current instruction wants to write to the data memory (Store word).</li>
+
+
+</ul></small><br>
 <p>Each instruction is encoded as a sequence of 16 bits. Depending on the instruction code (first three most significant bits), it could be interpreted as follow:
 <ul>
 <li>For the unary register operations:</li>
@@ -151,6 +161,15 @@ u {text-decoration: underline;}</style>
 	<li> 5-0 : signed immediate
 </ul>
 </ul>
+<ul>
+  <li>For the immediate operations:</li>
+  <ul>
+    <li> 15-13 : 011 (instruction code)
+    <li> 12-11 : operation code (lw or sw)
+    <li> 10-8 : rd
+    <li> 7-0 : unsigned immediate
+  </ul>
+  </ul>
 <br>In other words, each operation is selected according to the instruction code and with the help of MUX blocks.
 <br>The following table lists all operation codes:
 <br>
