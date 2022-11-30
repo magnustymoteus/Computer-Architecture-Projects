@@ -116,10 +116,46 @@ u {text-decoration: underline;}</style>
 
 <h3>Data Memory</h3>
 <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669742624/CA_project_5/09.png">
-<p>...</p>
+<p>Our data memory block uses a Logisim RAM unit (with seperate load and store ports) to load or to store words (lw and sw operations). The block has two operands: ALU Out (to calculate the offset) and RegSrc Data (to load the information from rs register).
+</p>
 <h3>Control</h3>
 <img src="https://res.cloudinary.com/dmejmwxek/image/upload/v1669736408/CA_project_5/02.png">
-<p>...</p>
+<p>Each instruction is encoded as a sequence of 16 bits. Depending on the instruction code (first three most significant bits), it could be interpreted as follow:
+<ul>
+<li>For the unary register operations:</li>
+<ul>
+	<li> 15-13 : 001 (instruction code)
+	<li> 12-9 : operation code
+	<li> 8-6 : rd
+	<li> 5-3 : rs
+	<li> 2-0 : 000 (unused)
+</ul>
+</ul>
+<ul>
+<li>For the binary register operations:</li>
+<ul>
+	<li> 15-13 : 010 (instruction code)
+	<li> 12-9 : operation code
+	<li> 8-6 : rd
+	<li> 5-3 : rs
+	<li> 2-0 : rt
+</ul>
+</ul>
+<ul>
+<li>For the memory operations:</li>
+<ul>
+	<li> 15-13 : 011 (instruction code)
+	<li> 12 : operation code
+	<li> 11-9 : rd
+	<li> 8-6 : rs
+	<li> 5-0 : signed immediate
+</ul>
+</ul>
+<br>In other words, each operation is selected according to the instruction code and with the help of MUX blocks.
+<br>The following table lists all operation codes:
+<br>
+<br>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1669831802/Project%205/instruction_table_jnsiit.png"></p>
 <h3>Overview of Instructions</h3>
 <ul>
 <li>Unary Operations
