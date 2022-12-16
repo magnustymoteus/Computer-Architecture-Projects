@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-15">
-<title>Project 5: Datapath (Patryk Pilichowski & Daria Matviichuk)</title>
+<title>Project 6: Full Datapath (Patryk Pilichowski & Daria Matviichuk)</title>
 <script>
     MathJax = {
       loader: {load: ['input/asciimath', 'output/chtml']}
@@ -59,8 +59,8 @@ u {text-decoration: underline;}</style>
   <b>Email adres:</b> <i>Daria.Matviichuk@student.uantwerpen.be</i>
   </li>
 </ul>
-<b>Aantal man-uren besteed:</b> <i>`~`13 uur</i><br>
-<b>Moeilijkheidsgraad:</b> <i></i>6/10<p></p>
+<b>Aantal man-uren besteed:</b> <i>`~`3 uur</i><br>
+<b>Moeilijkheidsgraad:</b> <i></i>3/10<p></p>
 
 <h2>Inhoud van de oplossing</h2>
 <p>De oplossing bestaat uit de volgende bestanden (geef alle bestanden op):</p>
@@ -82,6 +82,40 @@ u {text-decoration: underline;}</style>
 
 <div id="verslag">
 <h2>Verslag</h2>
+<h3>Full Datapath - Overview</h3>
+<p>We introduce a number of new instructions, including instructions for jump and branch.</p>
+<p>In the table below you could see a full set of the instructions covered by the datapath: </p>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1671205804/project%206/instructions_overview_jaxkqb.png">
+<h3>Adding a Program counter</h3>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1671206794/project%206/Program_counter_plus_ftpauq.png">
+<p>A detailed description of the Program counter can be found in the report Project 5. Now we have only added a second output, PC+1 (Program counter + 1) in case of relative branch, because then the branch value is added as 2's complemen number.</p>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1671206572/project%206/Program_counter_bmj0fb.png">
+<small><i>Program counter in main</i></small>
+<p>Depending on whether a "jump" in instruction is carried out or not, we choose between Program counter + 1 and RegDstData.</p>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1671207287/project%206/if_jump_fozs8t.png">
+<h3>Adding a Control Unit</h3>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1671217731/project%206/Big_control_ixtqi1.png">
+<small>A view of the Control unit from above</small>
+<p>You can see that r7 is used for the return address of the jal instructions.</p>
+<p>First, we add a check to see if the instruction is a jump, jump register or branch instruction.</p>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1671207692/project%206/jump_or_branch_zcadfv.png">
+<p>This scheme defines the target address: </p>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1671207904/project%206/target_address_zufia5.png">
+<p>In jump instructions the target address is given by 12 less significant bits of the instruction code; in the case of a branch instruction the target address is determined by a label address (in the form of an unsigned immediate value).</p>
+<p>Even a passing glance makes it clear that this component is very important:</p>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1671207018/project%206/Control_r9mkj3.png">
+<small><i>Control unit</i></small>
+<p>Each instruction can be now classified based on 15 characteristics. (There are four new: Jump register, Jump, Branch and Target Address. For details about the other characteristics see the report Project 5)</p>
+<h3>Creating an Immediate circuit</h3>
+<p>The immediate circuit has the following parameters:</p>
+<p>- Input is the instruction (16 bits).</p>
+<p>- Output is the immediate value (16 bits), depending on the instruction this will
+be a 6 (lw, sw, bv, beq), 8 (ori, lui, addi, subi), or 12-bit (j, jal) value that is unsigned/sign extended/shifted to 16 bits.</p>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1671208128/project%206/imm_rgpzi5.png">
+<p></p>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1671221718/project%206/unsigned_btwkip.png">
+<p></p>
+<img src="https://res.cloudinary.com/dlkqaco1t/image/upload/v1671222657/project%206/shift_lui_uyhodq.png">
 </div>
 </body>
 </html>
