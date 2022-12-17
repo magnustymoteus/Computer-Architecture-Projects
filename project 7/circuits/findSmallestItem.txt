@@ -1,0 +1,31 @@
+LOADMEM # r4-r5 will be reserved as args
+ori r4 15 # main: put address of length of array to arg 0
+lw r5 r4 0 #put length of array to arg 1
+jal 4
+j 14 #exit
+lw r1 r4 1 # initialize currentMin
+addi r4 1 # begin of loop
+addi r6 1  # increment iterator
+lw r2 r4 0
+blt r2 r1 3
+beq r5 r6 1 
+j 5 # repeat loop
+jr r7 0 
+cp r1 r2
+j 9
+CHECKMEM
+r1: 981
+pc: 14
+DATAMEM
+10 # length of array
+1029
+3017
+1426
+1071
+7819
+2001
+981
+1917
+4721
+9715
+END
