@@ -1,0 +1,20 @@
+LOADMEM
+ori r1 1 # initialize fibonacci sequence ptr offset
+ori r2 1 # first value of fibonacci
+lw r5 r0 10 # get limit from data seg.
+
+beq r1 r5 5 # exit if offset equals to limit
+sw r2 r1 31 
+addi r1 1
+add r2 r2 r3
+lw r3 r1 30
+j 3 # repeat loop
+CHECKMEM
+r2: 28657
+r5: 23
+pc: 9
+DATAMEM
+23 # amount of iterations
+# Answer: the last fib number for a 16-bit ALU is 28657. The next number 46368, is beyond 2's complement 16-bit range (2^15)-1
+END
+
