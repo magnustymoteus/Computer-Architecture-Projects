@@ -59,23 +59,25 @@ u {text-decoration: underline;}</style>
   <b>Email adres:</b> <i>Daria.Matviichuk@student.uantwerpen.be</i>
   </li>
 </ul>
-<b>Aantal man-uren besteed:</b> <i>`~`13 uur</i><br>
+<b>Aantal man-uren besteed:</b> <i>`~`7 uur</i><br>
 <b>Moeilijkheidsgraad:</b> <i></i>6/10<p></p>
 
 <h2>Inhoud van de oplossing</h2>
 <p>De oplossing bestaat uit de volgende bestanden (geef alle bestanden op):</p>
 <ul>
-<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669736550/CA_project_5/SD_Group30.circ">SD_Group30.circ</a>: Simple datapath <ul>
-<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669736549/CA_project_5/register_patryk_modified.circ">register_patryk_modified.circ</a>: Register File modified for debugging purposes</li>
-<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669736550/CA_project_5/CLA_patryk.circ">CLA_patryk.circ</a>: Carry lookahead adder</li>
-<li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669736550/CA_project_5/ALU_patryk.circ">ALU_patryk.circ</a>: Arithmetic Logic Unit
+<li><a href="circuits/SD_Group30.circ">SD_Group30.circ</a>: Full datapath with exception control <ul>
+<li><a href="circuits/register_patryk_modified.circ">register_patryk_modified.circ</a>: Register File modified for debugging purposes</li>
+<li><a href="circuits/CLA_patryk.circ">CLA_patryk.circ</a>: Carry lookahead adder</li>
+<li><a href="circuits/ALU_patryk.circ">ALU_patryk.circ</a>: Arithmetic Logic Unit
 <ul>
-  <li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669736550/CA_project_5/adder_patryk.circ">adder_patryk.circ</a>: Adder </li>
-  <li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669736550/CA_project_5/shifter_patryk.circ">shifter_patryk.circ</a>: Shifter </li>
-  <li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669736549/CA_project_5/comparator_patryk.circ">comparator_patryk.circ</a>: Comparator </li>
-  <li><a href="https://res.cloudinary.com/dmejmwxek/raw/upload/v1669736549/CA_project_5/overflow_passer_patryk.circ">overflow_passer_patryk.circ</a>: Overflow Passer </li>
+  <li><a href="circuits/adder_patryk.circ">adder_patryk.circ</a>: Adder </li>
+  <li><a href="circuits/shifter_patryk.circ">shifter_patryk.circ</a>: Shifter </li>
+  <li><a href="circuits/comparator_patryk.circ">comparator_patryk.circ</a>: Comparator </li>
+  <li><a href="circuits/overflow_passer_patryk.circ">overflow_passer_patryk.circ</a>: Overflow Passer </li>
 </ul>
 </li>
+<li><a href="circuits/fibonacci.txt">fibonacci.txt</a>: Program that calculates the Fibonacci numbers</li>
+<li><a href="circuits/findSmallestItem.txt"></a>: Program that finds the smallest element in an array </li>
 </ul>
 </li>
 </ul>
@@ -83,5 +85,30 @@ u {text-decoration: underline;}</style>
 <div id="verslag">
 <h2>Verslag</h2>
 </div>
+<h3>Exception control</h3>
+<p>First at all let's look at the modified halt circuit below.</p>
+<img src="screenshots/halt.PNG">
+<p>Halt circuit stops returns true (1) back if the program count is out of range, the program counter == 0, or by an appearing exception.</p>
+<p>At the picture below you can see the halt circuit in use: </p>
+<img src="screenshots/current_instr.PNG">
+<P>So, if the halt circuit gives 1 back, the clock can not change the value of the Program counter, and the program stops running.</P>
+<p>There are two cases when an exception can appear:</p>
+<ul><li>ALU operation has caused an overflow;</li>
+<li>The given instruction does not exist.</li>
+</ul>
+<img src="screenshots/control_in_use.PNG">
+<p>Let's look carefully inside of the Exception control:</p>
+<img src="screenshots/exception_control.PNG">
+<p>Here we can split the "The instruction does not exist" case in the four smaller cases:</p>
+<ul><li>InvalidZero
+<p>Occurs by zero operation if some bits (beside 6-8, which correspond to rd code number) are not equal to 0.</p></li>
+<li>InvalidUnary
+<p>Occurs by the instructions whose opcode begins with <i>001</i>. Bits 9-12 do not use all possible combinations, so if somebody tries to use not existing instruction, the exception is called. There is also another reason for the exception: the 0-2 bits have to be equal to zero, otherwise you have a non-existing instruction.</p></li>
+<li>InvalidBinary
+<p>Occurs by the instructions whose opcode begins with <i>010</i>. Bits 9-12 do not use all possible combinations, so if somebody tries to use not existing instruction, the exception is called.</p></li>
+<li>InvalidJR
+<p>Occurs by the instruction whose opcode begins with <i>011</i>, namely <i>jr</i>. Bits 11-12 do not use all possible combinations (they have to be equal to zero), so if somebody tries to use not-existing instruction, the exception is called.</p></li>
+</ul>
+<h3>Assembler programs</h3>
 </body>
 </html>
