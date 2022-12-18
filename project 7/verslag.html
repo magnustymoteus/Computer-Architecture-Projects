@@ -77,7 +77,7 @@ u {text-decoration: underline;}</style>
 </ul>
 </li>
 <li><a href="circuits/fibonacci.txt">fibonacci.txt</a>: Program that calculates the Fibonacci numbers</li>
-<li><a href="circuits/findSmallestItem.txt"></a>: Program that finds the smallest element in an array </li>
+<li><a href="circuits/findSmallestItem.txt">findSmallestItem.txt</a>: Program that finds the smallest element in an array </li>
 </ul>
 </li>
 </ul>
@@ -103,12 +103,18 @@ u {text-decoration: underline;}</style>
 <ul><li>InvalidZero
 <p>Occurs by zero operation if some bits (beside 6-8, which correspond to rd code number) are not equal to 0.</p></li>
 <li>InvalidUnary
-<p>Occurs by the instructions whose opcode begins with <i>001</i>. Bits 9-12 do not use all possible combinations, so if somebody tries to use not existing instruction, the exception is called. There is also another reason for the exception: the 0-2 bits have to be equal to zero, otherwise you have a non-existing instruction.</p></li>
+<p>Occurs by the instructions whose opcode begins with <i>001</i>. Bits 9-12 do not use all possible combinations, so if somebody tries to use not a existing instruction, the exception is called. There is also another reason for the exception: the 0-2 bits have to be equal to zero, otherwise you have a non-existing instruction.</p></li>
 <li>InvalidBinary
-<p>Occurs by the instructions whose opcode begins with <i>010</i>. Bits 9-12 do not use all possible combinations, so if somebody tries to use not existing instruction, the exception is called.</p></li>
+<p>Occurs by the instructions whose opcode begins with <i>010</i>. Bits 9-12 do not use all possible combinations, so if somebody tries to use not a existing instruction, the exception is called.</p></li>
 <li>InvalidJR
-<p>Occurs by the instruction whose opcode begins with <i>011</i>, namely <i>jr</i>. Bits 11-12 do not use all possible combinations (they have to be equal to zero), so if somebody tries to use not-existing instruction, the exception is called.</p></li>
+<p>Occurs by the instruction whose opcode begins with <i>011</i>, namely <i>jr</i>. Bits 11-12 do not use all possible combinations (they have to be equal to zero), so if somebody tries to use a not-existing instruction, the exception is called.</p></li>
 </ul>
 <h3>Assembler programs</h3>
+<p>To check our Datapath, one of us has written 2 assembler programs (see <i><a href="circuits/fibonacci.txt">fibonacci.txt</a></i> and <i><a href="circuits/findSmallestItem.txt">findSmallestItem.txt</a></i>).</p>
+
+<p>The first one calculates Fibonacci numbers, and the second one finds the smallest element in the array.</p>
+<p>Because of the memory limitations of our datapath, we can find only 23 first Fibonacci numbers (the last one is 28657). The next number 46368 (=01011010100100000), is beyond 2's complement 16-bit range (2^15)-1</p>
+
+<p>The second program use a linear search to find the smallest value and then stores it in the memory. You have also to provide the length of the array.</p>
 </body>
 </html>
